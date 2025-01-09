@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "module": "ES2020", // 동적 가져오기 사용하기 위함
     "target": "ESNext", // 컴파일되는 js 버전
     "jsx": "react-jsx", // jsx변환 방법
     "strict": true, // 타입 검사는 여러 항목이 있는데 그 모든 항목을 검사하겠다는 의미

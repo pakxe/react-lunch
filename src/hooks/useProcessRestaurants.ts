@@ -58,7 +58,6 @@ const useProcessRestaurants = () => {
   };
 
   useEffect(() => {
-    console.log(data);
     setProcessedRestaurant(processRestaurants(data, filter, sort, tab));
   }, [filter, sort, data, tab]);
 

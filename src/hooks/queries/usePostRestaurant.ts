@@ -4,7 +4,6 @@ import fetchUtil from '../../utils/fetch';
 import { QUERY_KEY } from '../../constants/queryKey';
 
 const requestPostRestaurant = async (restaurant: Omit<Restaurant, 'id'>) => {
-  console.log(restaurant);
   await fetchUtil.post<Omit<Restaurant, 'id'>>('https://example.com/restaurants', restaurant);
 };
 
