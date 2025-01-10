@@ -10,9 +10,10 @@ type Props = WithChildren &
     textAlign?: 'left' | 'center' | 'right';
     color?: keyof typeof theme.colors;
     required?: boolean;
+    lineLimit?: number;
   };
 
-const Text = ({ type = 'body', color, textAlign, required, children }: Props) => {
+const Text = ({ type = 'body', color, textAlign, required, lineLimit, children }: Props) => {
   const theme = useTheme();
 
   return (
@@ -23,6 +24,14 @@ const Text = ({ type = 'body', color, textAlign, required, children }: Props) =>
         text-align: ${textAlign || 'left'};
 
         display: flex;
+
+        ${lineLimit &&
+        css`
+          overflow: hidden; /* 줄임표 사용하려면 모든 속성이 필요하다. */
+          -webkit-line-clamp: ${lineLimit};
+          -webkit-box-orient: vertical;
+          display: -webkit-box;
+        `}
       `}>
       {children}
       {required && (
