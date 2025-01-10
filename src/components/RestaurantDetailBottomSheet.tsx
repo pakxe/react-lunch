@@ -7,7 +7,7 @@ import Icon from './Icon';
 import Text from './Text';
 import { useDeleteRestaurant } from '../hooks/queries/useDeleteRestaurant';
 import Toggle from './Toggle';
-import useRestaurantStore from '../stores/restaurantsStore';
+import useRestaurantsStore from '../stores/restaurantsStore';
 import { usePatchFavoriteRestaurant } from '../hooks/queries/usePatchFavoriteRestaurant';
 
 type Props = BottomSheetProps & {
@@ -20,8 +20,9 @@ const RestaurantDetailBottomSheet = ({ isOpen, onClose, id }: Props) => {
 
   const { deleteRestaurant } = useDeleteRestaurant();
 
-  const toggleFavorite = useRestaurantStore((state) => state.toggleFavorite);
-  const restaurants = useRestaurantStore((state) => state.restaurants);
+  const toggleFavorite = useRestaurantsStore((state) => state.toggleFavorite);
+  const restaurants = useRestaurantsStore((state) => state.restaurants);
+  const getFavoriteStateOfRestaurant = useRestaurantsStore((state) => state.getFavoriteStateOfRestaurant);
 
   const { changeFavorite } = usePatchFavoriteRestaurant();
 
@@ -31,17 +32,14 @@ const RestaurantDetailBottomSheet = ({ isOpen, onClose, id }: Props) => {
   };
 
   const onToggle = () => {
-    const target = restaurants.find((restaurant) => restaurant.id === id)?.favorite;
-
-    if (target === undefined) return;
-    changeFavorite({ id, favorite: !target });
+    changeFavorite({ id, favorite: !getFavoriteStateOfRestaurant(id) });
     toggleFavorite(id);
   };
 
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose} size='medium'>
       <Toggle
-        value={restaurants.find((restaurant) => restaurant.id === id)?.favorite}
+        value={restaurants.get(id)?.favorite}
         onClick={onToggle}
         cssProp={css`
           position: absolute;
