@@ -39,7 +39,7 @@ const dummyData = [
   },
   {
     id: 4,
-    category: 'italian',
+    category: 'western',
     name: '이태리키친',
     description:
       '2005년 장모님에게 전수받은 설렁탕 조리법을 개선하여 시작했다는 외고의 명물로, 다양한 이탈리아 요리를 선보이고 있습니다.',
