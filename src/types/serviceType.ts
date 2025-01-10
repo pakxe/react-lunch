@@ -1,4 +1,6 @@
-export type Category = 'korean' | 'chinese' | 'japanese' | 'western' | 'asian' | 'etc';
+import { CATEGORY } from '../constants/category';
+
+export type Category = (typeof CATEGORY)[number];
 
 export type TimeToMove = 5 | 10 | 15 | 20;
 
