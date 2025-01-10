@@ -1,10 +1,17 @@
 import { useEffect, useState } from 'react';
-import { Category, Restaurant } from '../types/serviceType';
+import { Restaurant } from '../types/serviceType';
 import useGetRestaurants from './queries/useGetRestaurants';
+import { CATEGORY } from '../constants/category';
+import useSelectedValue from './useSelectedValue';
 
-type Filter = 'all' | Category;
-type Sort = 'latest' | 'name';
-type Tab = 'total' | 'favorite';
+const filterList = [...CATEGORY, 'all'] as const;
+type Filter = (typeof filterList)[number];
+
+const sortList = ['latest', 'name'] as const;
+type Sort = (typeof sortList)[number];
+
+const tabList = ['total', 'favorite'] as const;
+type Tab = (typeof tabList)[number];
 
 const filterTabRestaurants = (restaurants: Restaurant[], tab: Tab) => {
   if (tab === 'total') return restaurants;
@@ -36,26 +43,13 @@ const processRestaurants = (restaurants: Restaurant[], filter: Filter, sort: Sor
 
 const useProcessRestaurants = () => {
   const { restaurants: data } = useGetRestaurants();
-  const [filter, setFilter] = useState<Filter>('all');
-  const [sort, setSort] = useState<Sort>('latest');
-  const [tab, setTab] = useState<Tab>('total');
+  const [tab, handleTab] = useSelectedValue<Tab>('total', tabList);
+  const [filter, handleFilter] = useSelectedValue<Filter>('all', filterList);
+  const [sort, handleSort] = useSelectedValue<Sort>('latest', sortList);
 
   const [processedRestaurants, setProcessedRestaurant] = useState<Restaurant[]>(
     processRestaurants(data, filter, sort, tab),
   );
-
-  const handleFilter = (filter: string) => {
-    // 유효성 검사
-    setFilter(filter);
-  };
-
-  const handleSort = (sort: string) => {
-    setSort(sort);
-  };
-
-  const handleTab = (tab: string) => {
-    setTab(tab);
-  };
 
   useEffect(() => {
     setProcessedRestaurant(processRestaurants(data, filter, sort, tab));
