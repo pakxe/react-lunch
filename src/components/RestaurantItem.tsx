@@ -6,6 +6,7 @@ import useRestaurantDetailBottomSheet from '../hooks/bottomSheets/useRestaurantD
 import Toggle from './Toggle';
 import useRestaurantsStore from '../stores/restaurantsStore';
 import { usePatchFavoriteRestaurant } from '../hooks/queries/usePatchFavoriteRestaurant';
+import Spacing from './Spacing';
 
 type RestaurantItemProps = {
   restaurant: Restaurant;
@@ -27,18 +28,18 @@ const RestaurantItem = ({ restaurant }: RestaurantItemProps) => {
     <div
       css={css`
         position: relative;
+        padding: 16px 8px;
       `}>
       <div
         onClick={() => open(id)}
         css={css`
           width: 100%;
-          height: 137px;
 
           display: flex;
 
           gap: 16px;
         `}>
-        <Icon backgroundColor='primaryLighten' category={category} />
+        <Icon backgroundColor='primaryLighten' src={`../../templates/category-${category}.png`} />
         <div>
           <Text type='subtitle' color='gray5'>
             {name}
@@ -46,7 +47,8 @@ const RestaurantItem = ({ restaurant }: RestaurantItemProps) => {
           <Text type='body' color='primary'>
             캠퍼스부터 {timeToMove}분 내
           </Text>
-          <Text type='body' color='gray5'>
+          <Spacing height={8} />
+          <Text type='body' color='gray5' lineLimit={2}>
             {description}
           </Text>
         </div>
