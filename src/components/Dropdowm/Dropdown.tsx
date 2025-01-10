@@ -1,5 +1,6 @@
 import { css, useTheme } from '@emotion/react';
-import { useState, Children, ComponentProps, ReactElement } from 'react';
+import { useState, ComponentProps, ReactElement, cloneElement } from 'react';
+import makeChildrenArray from '../../utils/makeChildrenArray';
 
 type OptionType = ReactElement<ComponentProps<typeof Option>>;
 
@@ -7,27 +8,28 @@ interface DropdownProps {
   children: OptionType | OptionType[];
   defaultValue?: string;
   fullWidth?: boolean;
-  onChange?: (value: string) => void;
+  onClick?: (value: string) => void;
 }
 
 interface DropdownOptionProps {
   value: string;
   children: string;
+  onClick?: (value: string, name: string) => void;
 }
 
-const Dropdown = ({ children, defaultValue, fullWidth, onChange }: DropdownProps) => {
-  const validatedChildren = Children.toArray(children) as OptionType[];
-  const selectedLabel =
-    validatedChildren.find((child) => child.props.value === defaultValue)?.props.children ||
-    validatedChildren[0]?.props.children;
+const Dropdown = ({ children, defaultValue, fullWidth, onClick }: DropdownProps) => {
+  const childrenArray = makeChildrenArray(children);
+  const selectedOption =
+    childrenArray.find((child) => child.props.value === defaultValue)?.props.children ||
+    childrenArray[0].props.children;
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedValue, setSelectedValue] = useState<string | undefined>(String(selectedLabel));
+  const [selectedValue, setSelectedValue] = useState<string | undefined>(String(selectedOption));
 
-  const toggleDropdown = () => setIsOpen(!isOpen);
+  const toggleDropdown = () => setIsOpen((prev) => !prev);
 
   const handleOptionClick = (value: string, name: string) => {
-    if (onChange) {
-      onChange(value);
+    if (onClick) {
+      onClick(value);
     }
 
     setSelectedValue(name);
@@ -53,30 +55,38 @@ const Dropdown = ({ children, defaultValue, fullWidth, onChange }: DropdownProps
             background-color: ${theme.colors.gray1};
             border: 1px solid ${theme.colors.gray2};
             border-top: none;
-            width: 100%;
             z-index: 1;
           `}>
-          {validatedChildren.map((child) => (
-            <li
-              key={child.props.value}
-              css={css`
-                width: 100%;
-
-                cursor: pointer;
-                padding: 8px 16px;
-              `}
-              onClick={() => handleOptionClick(child.props.value, String(child.props.children))}>
-              {child.props.children}
-            </li>
-          ))}
+          {childrenArray.map((child) => {
+            return cloneElement(child, {
+              value: child.props.value,
+              onClick: handleOptionClick,
+            });
+          })}
         </ul>
       )}
     </div>
   );
 };
 
-const Option = ({ value, children }: DropdownOptionProps) => {
-  return <>{children}</>;
+const Option = ({ value, children, onClick }: DropdownOptionProps) => {
+  return (
+    <li
+      key={value}
+      css={css`
+        width: 100%;
+
+        cursor: pointer;
+        padding: 8px 16px;
+      `}
+      onClick={() => {
+        if (onClick) {
+          onClick(value, children);
+        }
+      }}>
+      {children}
+    </li>
+  );
 };
 
 Dropdown.Option = Option;
