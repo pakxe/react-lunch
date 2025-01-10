@@ -1,14 +1,15 @@
 import { css, useTheme } from '@emotion/react';
 import theme from '../theme';
 import { Category } from '../types/serviceType';
+import { ReactNode } from 'react';
 
 type IconProps = {
   backgroundColor: keyof typeof theme.colors;
-  category: Category;
+  src: string;
 };
 
 // TODO: 이미지 보이게 해야한다.
-const Icon = ({ backgroundColor, category }: IconProps) => {
+const Icon = ({ backgroundColor, src }: IconProps) => {
   const theme = useTheme();
 
   return (
@@ -22,8 +23,12 @@ const Icon = ({ backgroundColor, category }: IconProps) => {
         border-radius: 50%;
 
         background-color: ${theme.colors[backgroundColor]};
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
       `}>
-      {category}
+      <img src={src} />
     </div>
   );
 };
