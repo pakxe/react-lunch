@@ -1,4 +1,4 @@
-import { css } from '@emotion/react';
+import { css, useTheme } from '@emotion/react';
 import useGetRestaurantDetail from '../hooks/queries/useGetRestaurantDetail';
 import { BottomSheetProps } from '../types/bottomSheet';
 import BottomSheet from './BottomSheet';
@@ -9,6 +9,7 @@ import { useDeleteRestaurant } from '../hooks/queries/useDeleteRestaurant';
 import Toggle from './Toggle';
 import useRestaurantsStore from '../stores/restaurantsStore';
 import { usePatchFavoriteRestaurant } from '../hooks/queries/usePatchFavoriteRestaurant';
+import Spacing from './Spacing';
 
 type Props = BottomSheetProps & {
   id: number;
@@ -19,10 +20,10 @@ const RestaurantDetailBottomSheet = ({ isOpen, onClose, id }: Props) => {
   const { name, category, timeToMove, description, link } = restaurant;
 
   const { deleteRestaurant } = useDeleteRestaurant();
-
   const { toggleFavorite, restaurants, getFavoriteStateOfRestaurant } = useRestaurantsStore();
-
   const { changeFavorite } = usePatchFavoriteRestaurant();
+
+  const theme = useTheme();
 
   const onDelete = async () => {
     onClose();
@@ -45,13 +46,22 @@ const RestaurantDetailBottomSheet = ({ isOpen, onClose, id }: Props) => {
           top: 8px;
         `}
       />
-      <Icon backgroundColor='primaryLighten' category={category} />
+      <Icon backgroundColor='primaryLighten' src={`../../templates/category-${category}.png`} />
+
+      <Spacing height={8} />
+
       <Text type='subtitle' color='gray5'>
         {name}
       </Text>
+
+      <Spacing height={8} />
+
       <Text type='body' color='primary'>
         캠퍼스부터 {timeToMove}분 내
       </Text>
+
+      <Spacing height={8} />
+
       <Text type='body' color='gray5'>
         {description}
       </Text>
@@ -67,10 +77,17 @@ const RestaurantDetailBottomSheet = ({ isOpen, onClose, id }: Props) => {
       </a>
       <div
         css={css`
-          width: 100%;
+          background-color: ${theme.colors.gray1};
 
           display: flex;
+          gap: 16px;
 
+          width: 100%;
+
+          padding: 32px 16px;
+
+          position: absolute;
+          left: 0;
           bottom: 0;
         `}>
         <Button onClick={onDelete} variant='secondary' fullWidth>
