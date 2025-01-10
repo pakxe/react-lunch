@@ -5,7 +5,6 @@ type HeaderProps = {
   right?: React.ReactNode;
 };
 
-// TODO: 바럼쉿뜰떄 안가려진다.
 const Header = ({ left, right }: HeaderProps) => {
   const theme = useTheme();
 
@@ -16,7 +15,7 @@ const Header = ({ left, right }: HeaderProps) => {
         width: 100%;
         height: 64px;
         inset: 0;
-        z-index: 1;
+        z-index: 2;
         background-color: ${theme.colors.primary};
         margin: 0 auto;
 
