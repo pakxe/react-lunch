@@ -1,6 +1,7 @@
 import { css, useTheme } from '@emotion/react';
 import { useState, ComponentProps, ReactElement, cloneElement } from 'react';
 import makeChildrenArray from '../../utils/makeChildrenArray';
+import Text from '../Text';
 
 type OptionType = ReactElement<ComponentProps<typeof Option>>;
 
@@ -42,20 +43,32 @@ const Dropdown = ({ children, defaultValue, fullWidth, onClick }: DropdownProps)
     <div
       css={css`
         position: relative;
-        border: 1px solid ${theme.colors.gray2};
-        width: ${fullWidth ? '100%' : 'auto'};
       `}>
-      <button onClick={toggleDropdown} style={{ padding: '8px 16px', cursor: 'pointer', width: '100%' }}>
-        {selectedValue}
+      <button
+        onClick={toggleDropdown}
+        css={css`
+          border: 1px solid ${theme.colors.gray2};
+          width: ${fullWidth ? '100%' : '125px'};
+          border-radius: 8px;
+          padding: 8px 16px;
+          cursor: pointer;
+        `}>
+        <Text>{selectedValue}</Text>
       </button>
       {isOpen && (
         <ul
           css={css`
-            position: fixed;
+            position: absolute;
+            top: 0;
+
             background-color: ${theme.colors.gray1};
             border: 1px solid ${theme.colors.gray2};
-            border-top: none;
+
             z-index: 1;
+
+            width: ${fullWidth ? '100%' : '125px'};
+
+            border-radius: 8px;
           `}>
           {childrenArray.map((child) => {
             return cloneElement(child, {
@@ -84,7 +97,7 @@ const Option = ({ value, children, onClick }: DropdownOptionProps) => {
           onClick(value, children);
         }
       }}>
-      {children}
+      <Text>{children}</Text>
     </li>
   );
 };
