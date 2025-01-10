@@ -1,7 +1,7 @@
 import useAddRestaurantBottomSheet from '../../hooks/bottomSheets/useAddRestaurantBottomSheet';
-import Button from '../Button';
 import Header from '../Header';
 import Text from '../Text';
+import addIcon from '../../../templates/add-button.png';
 
 const HeaderField = () => {
   const { open } = useAddRestaurantBottomSheet();
@@ -13,7 +13,11 @@ const HeaderField = () => {
           점심 뭐 먹지
         </Text>
       }
-      right={<Button onClick={open}>추가</Button>}
+      right={
+        <button onClick={open}>
+          <img src={addIcon} />
+        </button>
+      }
     />
   );
 };
