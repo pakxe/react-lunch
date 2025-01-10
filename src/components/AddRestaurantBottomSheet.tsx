@@ -7,7 +7,7 @@ import Input from './Input';
 import Text from './Text';
 import usePostRestaurant from '../hooks/queries/usePostRestaurant';
 import { useState } from 'react';
-import { Category, TimeToMove } from '../types/serviceType';
+import { Category, Restaurant, TimeToMove } from '../types/serviceType';
 
 type RestaurantInput = {
   category: Category | 'none';
@@ -15,17 +15,6 @@ type RestaurantInput = {
   timeToMove: TimeToMove | 'none';
   description: string;
   link: string;
-};
-
-const isValidRestaurantInput = (restaurantInput: RestaurantInput): boolean => {
-  return restaurantInput.category !== 'none' && restaurantInput.name !== '' && restaurantInput.timeToMove !== 'none';
-};
-
-const formatRestaurant = (restaurantInput: RestaurantInput) => {
-  return {
-    ...restaurantInput,
-    timeToMove: Number(restaurantInput.timeToMove),
-  };
 };
 
 const AddRestaurantBottomSheet = ({ isOpen, onClose }: BottomSheetProps) => {
@@ -40,12 +29,20 @@ const AddRestaurantBottomSheet = ({ isOpen, onClose }: BottomSheetProps) => {
   const { addRestaurant } = usePostRestaurant();
 
   const onSubmit = async () => {
-    if (!isValidRestaurantInput(restaurant)) {
-      alert('입력값을 확인해주세요.');
+    if (restaurant.category === 'none' || restaurant.name === '' || restaurant.timeToMove === 'none') {
+      alert('모든 항목을 입력해주세요.');
       return;
     }
 
-    await addRestaurant(formatRestaurant(restaurant));
+    const formattedRestaurant: Omit<Restaurant, 'id'> = {
+      ...restaurant,
+      category: restaurant.category,
+      name: restaurant.name,
+      timeToMove: Number(restaurant.timeToMove),
+      favorite: false,
+    };
+
+    await addRestaurant(formattedRestaurant);
     onClose();
   };
 
@@ -58,7 +55,7 @@ const AddRestaurantBottomSheet = ({ isOpen, onClose }: BottomSheetProps) => {
       <Text required type='caption'>
         카테고리
       </Text>
-      <Dropdown onChange={(value) => onChange('category', value)}>
+      <Dropdown onClick={(value) => onChange('category', value)}>
         <Dropdown.Option value='none'>선택해주세요.</Dropdown.Option>
         <Dropdown.Option value='korean'>한식</Dropdown.Option>
         <Dropdown.Option value='chinese'>중식</Dropdown.Option>
@@ -76,7 +73,7 @@ const AddRestaurantBottomSheet = ({ isOpen, onClose }: BottomSheetProps) => {
       <Text required type='caption'>
         거리(도보이동시간)
       </Text>
-      <Dropdown onChange={(value) => onChange('timeToMove', value)}>
+      <Dropdown onClick={(value) => onChange('timeToMove', value)}>
         <Dropdown.Option value='none'>선택해주세요.</Dropdown.Option>
         <Dropdown.Option value='5'>5분</Dropdown.Option>
         <Dropdown.Option value='10'>10분</Dropdown.Option>
