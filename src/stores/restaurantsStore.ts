@@ -2,30 +2,42 @@ import { create } from 'zustand';
 import { Restaurant } from '../types/serviceType';
 
 type State = {
-  restaurants: Restaurant[];
+  restaurants: Map<number, Restaurant>;
 };
 
 type Action = {
   setRestaurants: (restaurants: Restaurant[]) => void;
   toggleFavorite: (id: number) => void;
-  getFavoriteStateById: (id: number) => boolean;
+  getFavoriteStateOfRestaurant: (id: number) => boolean;
 };
 
-const useRestaurantStore = create<State & Action>((set, get) => ({
-  restaurants: [],
+const useRestaurantsStore = create<State & Action>((set, get) => ({
+  restaurants: new Map<number, Restaurant>(),
   toggleFavorite: (id: number) => {
-    set((state) => ({
-      restaurants: state.restaurants.map((restaurant) =>
-        restaurant.id === id ? { ...restaurant, favorite: !restaurant.favorite } : restaurant,
-      ),
-    }));
-  },
-  setRestaurants: (restaurants) => set({ restaurants }),
-  getFavoriteStateById: (id: number) => {
-    const restaurant = get().restaurants.find((restaurant) => restaurant.id === id);
+    const restaurants = get().restaurants;
+    const restaurant = restaurants.get(id);
 
-    return restaurant?.favorite || false;
+    if (restaurant === undefined) return;
+
+    const newRestaurant = { ...restaurant, favorite: !restaurant.favorite };
+    restaurants.set(id, newRestaurant);
+  },
+  setRestaurants: (restaurants) => {
+    const favoriteRestaurants = new Map<number, Restaurant>();
+
+    for (const restaurant of restaurants) {
+      favoriteRestaurants.set(restaurant.id, restaurant);
+    }
+
+    set({ restaurants: favoriteRestaurants });
+  },
+  getFavoriteStateOfRestaurant: (id: number) => {
+    const restaurant = get().restaurants.get(id);
+
+    if (restaurant === undefined) return false;
+
+    return restaurant.favorite;
   },
 }));
 
-export default useRestaurantStore;
+export default useRestaurantsStore;
