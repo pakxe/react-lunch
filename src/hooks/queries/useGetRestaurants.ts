@@ -17,7 +17,7 @@ const useGetRestaurants = () => {
     queryFn: requestGetRestaurants,
   });
 
-  const setRestaurants = useRestaurantsStore((state) => state.setRestaurants);
+  const { setRestaurants } = useRestaurantsStore();
 
   useEffect(() => {
     setRestaurants(data || []);
