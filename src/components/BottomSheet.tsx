@@ -16,6 +16,7 @@ const getHeight = (size: 'small' | 'medium' | 'large') => {
 };
 
 const container = css({
+  zIndex: 1,
   position: 'fixed',
   inset: 0,
 
@@ -35,8 +36,6 @@ const dimmer = css({
   width: '100%',
   height: '100%',
 
-  zIndex: 2,
-
   backgroundColor: 'rgba(0, 0, 0, 0.5)',
 
   display: 'flex',
@@ -47,7 +46,6 @@ const dimmer = css({
 const content = (size: 'small' | 'medium' | 'large') =>
   css({
     position: 'relative',
-    zIndex: 2,
 
     width: '100%',
     height: getHeight(size),
