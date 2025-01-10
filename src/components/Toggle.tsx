@@ -1,5 +1,6 @@
-import { css, SerializedStyles, useTheme } from '@emotion/react';
+import { css, SerializedStyles } from '@emotion/react';
 import { useEffect, useState } from 'react';
+import Text from './Text';
 
 type Props = {
   cssProp?: SerializedStyles;
@@ -11,7 +12,6 @@ type Props = {
 const Toggle = ({ cssProp, onClick, value }: Props) => {
   const [isToggled, setIsToggled] = useState(value ?? false);
 
-  // TODO: 뭔가 이상한거같다 로직이
   useEffect(() => {
     setIsToggled(value ?? false);
   }, [value]);
@@ -22,26 +22,20 @@ const Toggle = ({ cssProp, onClick, value }: Props) => {
     setIsToggled((prev) => !prev);
   };
 
-  const theme = useTheme();
-
   return (
     <button
       onClick={handleToggle}
       css={css`
         width: 16px;
         height: 16px;
-        background-color: ${isToggled ? theme.colors.primary : theme.colors.gray2};
-        color: white;
         cursor: pointer;
         padding: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
 
-        ${cssProp}
+        ${cssProp};
       `}>
-      {isToggled ? 'On' : 'Off'}
+      <Text type='title' color='primary'>
+        {isToggled ? '★' : '☆'}
+      </Text>
     </button>
   );
 };
