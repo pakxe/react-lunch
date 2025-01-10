@@ -4,8 +4,7 @@ import Icon from './Icon';
 import Text from './Text';
 import useRestaurantDetailBottomSheet from '../hooks/bottomSheets/useRestaurantDetailBottomSheet';
 import Toggle from './Toggle';
-import useRestaurantStore from '../stores/restaurantsStore';
-import { useEffect } from 'react';
+import useRestaurantsStore from '../stores/restaurantsStore';
 import { usePatchFavoriteRestaurant } from '../hooks/queries/usePatchFavoriteRestaurant';
 
 type RestaurantItemProps = {
@@ -16,16 +15,13 @@ const RestaurantItem = ({ restaurant }: RestaurantItemProps) => {
   const { name, category, timeToMove, description, id } = restaurant;
   const { open } = useRestaurantDetailBottomSheet();
 
-  const restaurants = useRestaurantStore((state) => state.restaurants);
-  const toggleFavorite = useRestaurantStore((state) => state.toggleFavorite);
+  const restaurants = useRestaurantsStore((state) => state.restaurants);
+  const toggleFavorite = useRestaurantsStore((state) => state.toggleFavorite);
+  const getFavoriteStateOfRestaurant = useRestaurantsStore((state) => state.getFavoriteStateOfRestaurant);
 
   const { changeFavorite } = usePatchFavoriteRestaurant();
   const onToggle = () => {
-    // TODO: 정말 이방법말곤 없나?
-    const target = restaurants.find((restaurant) => restaurant.id === id)?.favorite;
-
-    if (target === undefined) return;
-    changeFavorite({ id, favorite: !target });
+    changeFavorite({ id, favorite: !getFavoriteStateOfRestaurant(id) });
     toggleFavorite(id);
   };
 
@@ -58,7 +54,7 @@ const RestaurantItem = ({ restaurant }: RestaurantItemProps) => {
         </div>
       </div>
       <Toggle
-        value={restaurants.find((restaurant) => restaurant.id === id)?.favorite}
+        value={restaurants.get(id)?.favorite}
         onClick={onToggle}
         cssProp={css`
           position: absolute;
