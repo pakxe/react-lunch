@@ -24,7 +24,7 @@ const RestaurantsPage = () => {
           display: flex;
           justify-content: space-between;
         `}>
-        <Dropdown defaultValue={filter} onChange={handleFilter}>
+        <Dropdown defaultValue={filter} onClick={handleFilter}>
           <Dropdown.Option value='all'>전체</Dropdown.Option>
           <Dropdown.Option value='korean'>한식</Dropdown.Option>
           <Dropdown.Option value='chinese'>중식</Dropdown.Option>
@@ -33,7 +33,7 @@ const RestaurantsPage = () => {
           <Dropdown.Option value='asian'>아시안</Dropdown.Option>
           <Dropdown.Option value='etc'>기타</Dropdown.Option>
         </Dropdown>
-        <Dropdown defaultValue={sort} onChange={handleSort}>
+        <Dropdown defaultValue={sort} onClick={handleSort}>
           <Dropdown.Option value='latest'>최신순</Dropdown.Option>
           <Dropdown.Option value='name'>이름순</Dropdown.Option>
         </Dropdown>
