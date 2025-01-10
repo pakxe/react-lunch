@@ -1,6 +1,8 @@
 import { cloneElement, ComponentProps, ReactElement, ReactNode, useState } from 'react';
-import { css, useTheme } from '@emotion/react';
+import { css } from '@emotion/react';
 import Text from './Text';
+import Line from './Line';
+import Spacing from './Spacing';
 
 type OptionType = ReactElement<ComponentProps<typeof Option>>;
 
@@ -24,11 +26,11 @@ const Tab = ({ defaultTab, onSelectTab, children }: TabProps) => {
     <div
       css={css`
         width: 100%;
+        padding: 16px 0;
       `}>
       <div
         css={css`
           display: flex;
-          border-bottom: 2px solid #ccc;
         `}>
         {validatedChildren.map((child) => {
           const isSelected = child.props.value === selectedTab;
@@ -48,23 +50,22 @@ type OptionProps = {
 };
 
 const Option = ({ value, children, isSelected, onSelect }: OptionProps) => {
-  const theme = useTheme();
-
   return (
     <div
       key={value}
       css={css`
-        flex-grow: 1;
-        padding: 8px 16px;
-        cursor: pointer;
-        border-bottom: 2px solid ${isSelected ? theme.colors.primary : 'transparent'};
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       `}
       onClick={() => {
         if (onSelect) onSelect(value);
       }}>
-      <Text textAlign='center' color={isSelected ? 'primary' : 'gray2'}>
-        {children}
-      </Text>
+      <Text color={isSelected ? 'primary' : 'gray2'}>{children}</Text>
+      <Spacing height={8} />
+      <Line height={2} color={isSelected ? 'primary' : 'gray2'} />
     </div>
   );
 };
