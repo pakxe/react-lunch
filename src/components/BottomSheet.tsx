@@ -16,7 +16,7 @@ const getHeight = (size: 'small' | 'medium' | 'large') => {
 };
 
 const container = css({
-  zIndex: 1,
+  zIndex: 3,
   position: 'fixed',
   inset: 0,
 
@@ -53,7 +53,7 @@ const content = (size: 'small' | 'medium' | 'large') =>
     backgroundColor: 'white',
     borderRadius: '8px 8px 0 0',
 
-    padding: '1rem',
+    padding: '32px 16px',
   });
 
 const bottomSheetStyle = {
