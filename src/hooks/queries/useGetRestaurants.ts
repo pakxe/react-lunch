@@ -3,7 +3,7 @@ import { Restaurant } from '../../types/serviceType';
 import fetchUtil from '../../utils/fetch';
 import { QUERY_KEY } from '../../constants/queryKey';
 import { useEffect } from 'react';
-import useRestaurantStore from '../../stores/restaurantsStore';
+import useRestaurantsStore from '../../stores/restaurantsStore';
 
 const requestGetRestaurants = async () => {
   const data = await fetchUtil.get<Restaurant[]>('https://example.com/restaurants');
@@ -17,11 +17,11 @@ const useGetRestaurants = () => {
     queryFn: requestGetRestaurants,
   });
 
-  const setRestaurants = useRestaurantStore((state) => state.setRestaurants);
+  const setRestaurants = useRestaurantsStore((state) => state.setRestaurants);
 
   useEffect(() => {
     setRestaurants(data || []);
-  }, []);
+  }, [data]);
 
   return {
     restaurants: data,
