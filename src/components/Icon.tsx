@@ -1,7 +1,5 @@
 import { css, useTheme } from '@emotion/react';
 import theme from '../theme';
-import { Category } from '../types/serviceType';
-import { ReactNode } from 'react';
 
 type IconProps = {
   backgroundColor: keyof typeof theme.colors;

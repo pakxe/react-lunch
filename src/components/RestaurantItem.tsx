@@ -35,7 +35,7 @@ const RestaurantItem = ({ restaurant }: RestaurantItemProps) => {
 
           gap: 16px;
         `}>
-        <Icon backgroundColor='primaryLighten' src={`../../templates/category-${category}.png`} />
+        <Icon backgroundColor='primaryLighten' src={`assets/category-${category}.png`} />
         <div>
           <Text type='subtitle' color='gray5'>
             {name}
