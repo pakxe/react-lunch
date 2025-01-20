@@ -2,13 +2,15 @@ import { css, useTheme } from '@emotion/react';
 import { BottomSheetProps } from '../types/bottomSheet';
 import BottomSheet from './BottomSheet';
 import Button from './Button';
-import Dropdown from './Dropdowm/Dropdown';
+import Dropdown from './Dropdown/Dropdown';
 import Input from './Input';
 import Text from './Text';
 import usePostRestaurant from '../hooks/queries/usePostRestaurant';
 import { useState } from 'react';
 import { Category, Restaurant, TimeToMove } from '../types/serviceType';
 import TextArea from './TextArea';
+import { TIME_TO_MOVE_LIST } from '../constants/timeToMove';
+import { CATEGORY_LIST } from '../constants/category';
 
 type RestaurantInput = {
   category: Category | 'none';
@@ -48,9 +50,13 @@ const AddRestaurantBottomSheet = ({ isOpen, onClose }: BottomSheetProps) => {
     onClose();
   };
 
-  const onChange = (type: 'category' | 'name' | 'timeToMove' | 'description' | 'link', value: string) => {
+  const onChange = (type: 'category' | 'name' | 'timeToMove' | 'description' | 'link', value: string | number) => {
     setRestaurant({ ...restaurant, [type]: value });
   };
+
+  const DEFAULT_ITEM = { value: 'none', name: '선택해주세요.' };
+  const TIME_TO_MOVE_LIST_WITH_DEFAULT = [DEFAULT_ITEM, ...TIME_TO_MOVE_LIST];
+  const CATEGORY_LIST_WITH_DEFAULT = [DEFAULT_ITEM, ...CATEGORY_LIST];
 
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose} size='large' title='새로운 음식점'>
@@ -66,13 +72,11 @@ const AddRestaurantBottomSheet = ({ isOpen, onClose }: BottomSheetProps) => {
             카테고리
           </Text>
           <Dropdown onClick={(value) => onChange('category', value)}>
-            <Dropdown.Option value='none'>선택해주세요.</Dropdown.Option>
-            <Dropdown.Option value='korean'>한식</Dropdown.Option>
-            <Dropdown.Option value='chinese'>중식</Dropdown.Option>
-            <Dropdown.Option value='japanese'>일식</Dropdown.Option>
-            <Dropdown.Option value='western'>양식</Dropdown.Option>
-            <Dropdown.Option value='asian'>아시안</Dropdown.Option>
-            <Dropdown.Option value='etc'>기타</Dropdown.Option>
+            {CATEGORY_LIST_WITH_DEFAULT.map(({ value, name }) => (
+              <Dropdown.Option key={value} value={value}>
+                {name}
+              </Dropdown.Option>
+            ))}
           </Dropdown>
         </div>
 
@@ -88,11 +92,11 @@ const AddRestaurantBottomSheet = ({ isOpen, onClose }: BottomSheetProps) => {
             거리(도보이동시간)
           </Text>
           <Dropdown onClick={(value) => onChange('timeToMove', value)}>
-            <Dropdown.Option value='none'>선택해주세요.</Dropdown.Option>
-            <Dropdown.Option value='5'>5분</Dropdown.Option>
-            <Dropdown.Option value='10'>10분</Dropdown.Option>
-            <Dropdown.Option value='15'>15분</Dropdown.Option>
-            <Dropdown.Option value='20'>20분</Dropdown.Option>
+            {TIME_TO_MOVE_LIST_WITH_DEFAULT.map(({ value, name }) => (
+              <Dropdown.Option key={value} value={value}>
+                {name}
+              </Dropdown.Option>
+            ))}
           </Dropdown>
         </div>
 
