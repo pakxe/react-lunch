@@ -1,8 +1,8 @@
 import { css, useTheme } from '@emotion/react';
 import { ComponentProps } from 'react';
-import { WithChildren } from '../types/withChildren';
 import { TYPOGRAPHY } from '../constants/typography';
 import theme from '../theme';
+import { WithChildren } from '../types/with';
 
 type Props = WithChildren &
   ComponentProps<'p'> & {
