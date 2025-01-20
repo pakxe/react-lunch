@@ -5,17 +5,19 @@ import Text from '../Text';
 
 type OptionType = ReactElement<ComponentProps<typeof Option>>;
 
+type Value = string | number;
+
 interface DropdownProps {
   children: OptionType | OptionType[];
-  defaultValue?: string;
+  defaultValue?: Value;
   fullWidth?: boolean;
-  onClick?: (value: string) => void;
+  onClick?: (value: Value) => void;
 }
 
 interface DropdownOptionProps {
-  value: string;
+  value: Value;
   children: string;
-  onClick?: (value: string, name: string) => void;
+  onClick?: (value: Value, name: string) => void;
 }
 
 const Dropdown = ({ children, defaultValue, fullWidth, onClick }: DropdownProps) => {
@@ -28,7 +30,7 @@ const Dropdown = ({ children, defaultValue, fullWidth, onClick }: DropdownProps)
 
   const toggleDropdown = () => setIsOpen((prev) => !prev);
 
-  const handleOptionClick = (value: string, name: string) => {
+  const handleOptionClick = (value: Value, name: string) => {
     if (onClick) {
       onClick(value);
     }
