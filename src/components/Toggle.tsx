@@ -9,11 +9,11 @@ type Props = {
 };
 
 // 완전 컨트롤드
-const Toggle = ({ cssProp, onClick, value }: Props) => {
-  const [isToggled, setIsToggled] = useState(value ?? false);
+const Toggle = ({ cssProp, onClick, value = false }: Props) => {
+  const [isToggled, setIsToggled] = useState(value);
 
   useEffect(() => {
-    setIsToggled(value ?? false);
+    setIsToggled(value);
   }, [value]);
 
   const handleToggle = () => {
