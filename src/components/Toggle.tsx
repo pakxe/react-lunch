@@ -8,7 +8,6 @@ type Props = {
   value?: boolean;
 };
 
-// 완전 컨트롤드
 const Toggle = ({ cssProp, onClick, value = false }: Props) => {
   const [isToggled, setIsToggled] = useState(value);
 
