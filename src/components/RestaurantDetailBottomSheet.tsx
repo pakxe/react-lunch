@@ -21,7 +21,7 @@ const RestaurantDetailBottomSheet = ({ isOpen, onClose, id }: Props) => {
 
   const { deleteRestaurant } = useDeleteRestaurant();
   const { toggleFavorite, restaurants, getFavoriteStateOfRestaurant } = useRestaurantsStore();
-  const { changeFavorite } = usePatchFavoriteRestaurant();
+  const { changeFavorite } = usePatchFavoriteRestaurant(id);
 
   const theme = useTheme();
 
