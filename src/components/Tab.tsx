@@ -3,19 +3,22 @@ import { css } from '@emotion/react';
 import Text from './Text';
 import Line from './Line';
 import Spacing from './Spacing';
+import makeChildrenArray from '../utils/makeChildrenArray';
 
 type OptionType = ReactElement<ComponentProps<typeof Option>>;
 
 type TabProps = {
-  defaultTab: string;
+  defaultTabValue: string;
   onSelectTab: (tab: string) => void;
   children: OptionType | OptionType[];
 };
 
-// TODO: 언더라인
-const Tab = ({ defaultTab, onSelectTab, children }: TabProps) => {
-  const validatedChildren = Array.isArray(children) ? children : [children];
-  const [selectedTab, setSelectedTab] = useState(defaultTab);
+const Tab = ({ defaultTabValue, onSelectTab, children }: TabProps) => {
+  const childrenArray = makeChildrenArray(children);
+  const selectedTabValue =
+    childrenArray.find((child) => child.props.value === defaultTabValue)?.props.value ?? childrenArray[0].props.value;
+
+  const [selectedTab, setSelectedTab] = useState(selectedTabValue);
 
   const onSelect = (value: string) => {
     onSelectTab(value);
@@ -32,7 +35,7 @@ const Tab = ({ defaultTab, onSelectTab, children }: TabProps) => {
         css={css`
           display: flex;
         `}>
-        {validatedChildren.map((child) => {
+        {childrenArray.map((child) => {
           const isSelected = child.props.value === selectedTab;
 
           return cloneElement(child, { isSelected, onSelect });
