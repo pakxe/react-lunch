@@ -1,11 +1,12 @@
 import { css } from '@emotion/react';
-import Dropdown from '../components/Dropdowm/Dropdown';
+import Dropdown from '../components/Dropdown/Dropdown';
 import Tab from '../components/Tab';
 import HeaderField from '../components/field/HeaderField';
 import useProcessRestaurants from '../hooks/useProcessRestaurants';
 import RowList from '../components/RowList';
 import RestaurantItem from '../components/RestaurantItem';
 import Text from '../components/Text';
+import { CATEGORY_LIST } from '../constants/category';
 
 const RestaurantsPage = () => {
   const { filter, sort, tab, handleTab, handleFilter, handleSort, restaurants } = useProcessRestaurants();
@@ -13,7 +14,7 @@ const RestaurantsPage = () => {
   return (
     <>
       <HeaderField />
-      <Tab defaultTab={tab} onSelectTab={(tab) => handleTab(tab)}>
+      <Tab defaultTabValue={tab} onSelectTab={(tab) => handleTab(tab)}>
         <Tab.Option value='total'>모든 음식점</Tab.Option>
         <Tab.Option value='favorite'>자주 가는 음식점</Tab.Option>
       </Tab>
@@ -25,13 +26,11 @@ const RestaurantsPage = () => {
           justify-content: space-between;
         `}>
         <Dropdown defaultValue={filter} onClick={handleFilter}>
-          <Dropdown.Option value='all'>전체</Dropdown.Option>
-          <Dropdown.Option value='korean'>한식</Dropdown.Option>
-          <Dropdown.Option value='chinese'>중식</Dropdown.Option>
-          <Dropdown.Option value='japanese'>일식</Dropdown.Option>
-          <Dropdown.Option value='western'>양식</Dropdown.Option>
-          <Dropdown.Option value='asian'>아시안</Dropdown.Option>
-          <Dropdown.Option value='etc'>기타</Dropdown.Option>
+          {CATEGORY_LIST.map(({ value, name }) => (
+            <Dropdown.Option key={value} value={value}>
+              {name}
+            </Dropdown.Option>
+          ))}
         </Dropdown>
         <Dropdown defaultValue={sort} onClick={handleSort}>
           <Dropdown.Option value='latest'>최신순</Dropdown.Option>
