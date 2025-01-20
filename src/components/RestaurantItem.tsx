@@ -18,7 +18,7 @@ const RestaurantItem = ({ restaurant }: RestaurantItemProps) => {
 
   const { restaurants, toggleFavorite, getFavoriteStateOfRestaurant } = useRestaurantsStore();
 
-  const { changeFavorite } = usePatchFavoriteRestaurant();
+  const { changeFavorite } = usePatchFavoriteRestaurant(id);
   const onToggle = () => {
     changeFavorite({ id, favorite: !getFavoriteStateOfRestaurant(id) });
     toggleFavorite(id);
