@@ -26,22 +26,19 @@ const Tab = ({ defaultTabValue, onSelectTab, children }: TabProps) => {
   };
 
   return (
-    <div
+    <ul
       css={css`
         width: 100%;
         padding: 16px 0;
-      `}>
-      <div
-        css={css`
-          display: flex;
-        `}>
-        {childrenArray.map((child) => {
-          const isSelected = child.props.value === selectedTab;
 
-          return cloneElement(child, { isSelected, onSelect });
-        })}
-      </div>
-    </div>
+        display: flex;
+      `}>
+      {childrenArray.map((child) => {
+        const isSelected = child.props.value === selectedTab;
+
+        return cloneElement(child, { isSelected, onSelect });
+      })}
+    </ul>
   );
 };
 
@@ -54,7 +51,7 @@ type OptionProps = {
 
 const Option = ({ value, children, isSelected, onSelect }: OptionProps) => {
   return (
-    <div
+    <li
       key={value}
       css={css`
         width: 100%;
@@ -69,7 +66,7 @@ const Option = ({ value, children, isSelected, onSelect }: OptionProps) => {
       <Text color={isSelected ? 'primary' : 'gray2'}>{children}</Text>
       <Spacing height={8} />
       <Line height={2} color={isSelected ? 'primary' : 'gray2'} />
-    </div>
+    </li>
   );
 };
 
