@@ -12,7 +12,7 @@ const requestPatchRestaurant = async ({ id, favorite }: { id: number; favorite: 
 const usePatchFavoriteRestaurant = (id: number) => {
   const queryClient = useQueryClient();
 
-  const { mutateAsync, ...rest } = useMutation({
+  const { mutate, ...rest } = useMutation({
     mutationFn: requestPatchRestaurant,
     mutationKey: [QUERY_KEY.RESTAURANTS],
     onSuccess: () => {
@@ -29,7 +29,7 @@ const usePatchFavoriteRestaurant = (id: number) => {
   });
 
   return {
-    changeFavorite: mutateAsync,
+    changeFavorite: mutate,
     ...rest,
   };
 };
