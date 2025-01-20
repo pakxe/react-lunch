@@ -366,7 +366,7 @@ Error generating stack: `+o.message+`
           display: flex;
 
           gap: 16px;
-        `,children:[C(Np,{backgroundColor:"primaryLighten",src:`../../templates/category-${n}.png`}),K("div",{children:[C(re,{type:"subtitle",color:"gray5",children:t}),K(re,{type:"body",color:"primary",children:["캠퍼스부터 ",r,"분 내"]}),C(ai,{height:8}),C(re,{type:"body",color:"gray5",lineLimit:2,children:i})]})]}),C(Ap,{value:l,onClick:a,cssProp:Q`
+        `,children:[C(Np,{backgroundColor:"primaryLighten",src:`public/assets/category-${n}.png`}),K("div",{children:[C(re,{type:"subtitle",color:"gray5",children:t}),K(re,{type:"body",color:"primary",children:["캠퍼스부터 ",r,"분 내"]}),C(ai,{height:8}),C(re,{type:"body",color:"gray5",lineLimit:2,children:i})]})]}),C(Ap,{value:l,onClick:a,cssProp:Q`
           position: absolute;
           right: 8px;
           top: 8px;
