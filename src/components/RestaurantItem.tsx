@@ -4,7 +4,6 @@ import Icon from './Icon';
 import Text from './Text';
 import useRestaurantDetailBottomSheet from '../hooks/bottomSheets/useRestaurantDetailBottomSheet';
 import Toggle from './Toggle';
-import useRestaurantsStore from '../stores/restaurantsStore';
 import { usePatchFavoriteRestaurant } from '../hooks/queries/usePatchFavoriteRestaurant';
 import Spacing from './Spacing';
 
@@ -13,15 +12,12 @@ type RestaurantItemProps = {
 };
 
 const RestaurantItem = ({ restaurant }: RestaurantItemProps) => {
-  const { name, category, timeToMove, description, id } = restaurant;
+  const { name, category, timeToMove, description, id, favorite } = restaurant;
   const { open } = useRestaurantDetailBottomSheet();
-
-  const { restaurants, toggleFavorite, getFavoriteStateOfRestaurant } = useRestaurantsStore();
 
   const { changeFavorite } = usePatchFavoriteRestaurant(id);
   const onToggle = () => {
-    changeFavorite({ id, favorite: !getFavoriteStateOfRestaurant(id) });
-    toggleFavorite(id);
+    changeFavorite({ id, favorite: !favorite });
   };
 
   return (
@@ -54,7 +50,7 @@ const RestaurantItem = ({ restaurant }: RestaurantItemProps) => {
         </div>
       </div>
       <Toggle
-        value={restaurants.get(id)?.favorite}
+        value={favorite}
         onClick={onToggle}
         cssProp={css`
           position: absolute;

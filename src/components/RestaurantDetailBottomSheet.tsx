@@ -7,7 +7,6 @@ import Icon from './Icon';
 import Text from './Text';
 import { useDeleteRestaurant } from '../hooks/queries/useDeleteRestaurant';
 import Toggle from './Toggle';
-import useRestaurantsStore from '../stores/restaurantsStore';
 import { usePatchFavoriteRestaurant } from '../hooks/queries/usePatchFavoriteRestaurant';
 import Spacing from './Spacing';
 
@@ -17,10 +16,9 @@ type Props = BottomSheetProps & {
 
 const RestaurantDetailBottomSheet = ({ isOpen, onClose, id }: Props) => {
   const { restaurant } = useGetRestaurantDetail(id);
-  const { name, category, timeToMove, description, link } = restaurant;
+  const { name, category, timeToMove, description, link, favorite } = restaurant;
 
   const { deleteRestaurant } = useDeleteRestaurant();
-  const { toggleFavorite, restaurants, getFavoriteStateOfRestaurant } = useRestaurantsStore();
   const { changeFavorite } = usePatchFavoriteRestaurant(id);
 
   const theme = useTheme();
@@ -31,14 +29,13 @@ const RestaurantDetailBottomSheet = ({ isOpen, onClose, id }: Props) => {
   };
 
   const onToggle = () => {
-    changeFavorite({ id, favorite: !getFavoriteStateOfRestaurant(id) });
-    toggleFavorite(id);
+    changeFavorite({ id, favorite: !favorite });
   };
 
   return (
     <BottomSheet isOpen={isOpen} onClose={onClose} size='medium'>
       <Toggle
-        value={restaurants.get(id)?.favorite}
+        value={favorite}
         onClick={onToggle}
         cssProp={css`
           position: absolute;
