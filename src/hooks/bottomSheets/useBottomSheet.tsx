@@ -13,7 +13,7 @@ type BottomSheet = {
 const useBottomSheet = () => {
   const [bottomSheets, setBottomSheets] = useState<Map<BottomSheetKey, BottomSheet>>(new Map());
 
-  const open = (key: BottomSheetKey, cb: (isOpen: boolean, onClose: () => void) => any) => {
+  const open = (key: BottomSheetKey, cb: (isOpen: boolean, onClose: () => void) => React.JSX.Element) => {
     setBottomSheets((prev) => {
       const newBottomSheets = new Map(prev);
       newBottomSheets.set(key, { id: key, isOpen: true, cb });
