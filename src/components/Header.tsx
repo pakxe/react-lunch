@@ -9,7 +9,7 @@ const Header = ({ left, right }: HeaderProps) => {
   const theme = useTheme();
 
   return (
-    <div
+    <nav
       css={css`
         max-width: 768px;
         width: 100%;
@@ -31,7 +31,7 @@ const Header = ({ left, right }: HeaderProps) => {
       `}>
       {left}
       {right}
-    </div>
+    </nav>
   );
 };
 

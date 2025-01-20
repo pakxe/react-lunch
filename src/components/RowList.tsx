@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { WithChildren } from '../types/WithChildren';
+import { WithChildren } from '../types/withChildren';
 import Line from './Line';
 import { Children } from 'react';
 

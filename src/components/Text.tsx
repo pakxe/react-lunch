@@ -1,6 +1,6 @@
 import { css, useTheme } from '@emotion/react';
 import { ComponentProps } from 'react';
-import { WithChildren } from '../types/WithChildren';
+import { WithChildren } from '../types/withChildren';
 import { TYPOGRAPHY } from '../constants/typography';
 import theme from '../theme';
 
