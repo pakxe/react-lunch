@@ -1,7 +1,7 @@
 import useAddRestaurantBottomSheet from '../../hooks/bottomSheets/useAddRestaurantBottomSheet';
 import Header from '../Header';
 import Text from '../Text';
-import addIcon from '../../../templates/add-button.png';
+import addIcon from '../../../public/assets/add-button.png';
 
 const HeaderField = () => {
   const { open } = useAddRestaurantBottomSheet();

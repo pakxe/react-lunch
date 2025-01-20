@@ -43,7 +43,7 @@ const RestaurantDetailBottomSheet = ({ isOpen, onClose, id }: Props) => {
           top: 8px;
         `}
       />
-      <Icon backgroundColor='primaryLighten' src={`../../templates/category-${category}.png`} />
+      <Icon backgroundColor='primaryLighten' src={`assets/category-${category}.png`} />
 
       <Spacing height={8} />
 
