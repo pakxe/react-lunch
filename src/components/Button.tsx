@@ -1,8 +1,7 @@
 import { ComponentProps } from 'react';
 import { css, useTheme } from '@emotion/react';
 import { TYPOGRAPHY } from '../constants/typography';
-import WithTheme from '../types/withTheme';
-import { WithChildren } from '../types/withChildren';
+import { WithChildren, WithTheme } from '../types/with';
 
 type ButtonType = 'primary' | 'secondary';
 

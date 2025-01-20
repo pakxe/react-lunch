@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-import { WithChildren } from '../types/withChildren';
+import { WithChildren } from '../types/with';
 
 const Layout = ({ children }: WithChildren) => {
   return (
