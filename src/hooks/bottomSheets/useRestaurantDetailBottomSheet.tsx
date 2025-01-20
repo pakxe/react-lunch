@@ -1,6 +1,6 @@
 import RestaurantDetailBottomSheet from '../../components/RestaurantDetailBottomSheet';
 import { BOTTOM_SHEET_KEY } from '../../constants/bottomSheetKey';
-import { useBottomSheet, useBottomSheetContext } from './useBottomSheet';
+import { useBottomSheetContext } from './useBottomSheet';
 
 const useRestaurantDetailBottomSheet = () => {
   const { open } = useBottomSheetContext();
