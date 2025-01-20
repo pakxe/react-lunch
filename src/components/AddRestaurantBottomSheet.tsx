@@ -98,7 +98,7 @@ const AddRestaurantBottomSheet = ({ isOpen, onClose }: BottomSheetProps) => {
 
         <div>
           <Text type='caption'>설명</Text>
-          <TextArea fullWidth onChange={(e) => onChange('timeToMove', e.target.value)} />
+          <TextArea fullWidth onChange={(e) => onChange('description', e.target.value)} />
           <Text type='caption' color='gray3'>
             메뉴 등 추가 정보를 입력해 주세요.
           </Text>
