@@ -119,9 +119,11 @@ export const handlers = [
     return new Response();
   }),
 
-  http.get('https://example.com/restaurants/:id', (req) => {
+  http.get('https://example.com/restaurants/:id', async (req) => {
     const { id } = req.params;
     const restaurant = restaurants.find((restaurant) => restaurant.id === Number(id));
+
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     if (!restaurant) {
       return new HttpResponse(null, {
