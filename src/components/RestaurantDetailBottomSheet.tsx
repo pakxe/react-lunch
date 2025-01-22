@@ -16,14 +16,14 @@ type Props = BottomSheetProps & {
 };
 
 const RestaurantDetailBottomSheet = ({ isOpen, onClose, id }: Props) => {
-  const { restaurant } = useGetRestaurantDetail(id);
+  const { restaurant, isFetching } = useGetRestaurantDetail(id);
 
   const { deleteRestaurant } = useDeleteRestaurant();
   const { changeFavorite } = usePatchFavoriteRestaurant(id);
 
   const theme = useTheme();
 
-  if (!restaurant) {
+  if (!restaurant || isFetching) {
     return <Spinner />;
   }
 
