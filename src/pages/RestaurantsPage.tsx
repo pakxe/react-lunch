@@ -11,6 +11,9 @@ import { CATEGORY_LIST } from '../constants/category';
 const RestaurantsPage = () => {
   const { filter, sort, tab, handleTab, handleFilter, handleSort, restaurants } = useProcessRestaurants();
 
+  const DEFAULT_ITEM = { value: 'all', name: '전체' };
+  const CATEGORY_LIST_WITH_ALL = [DEFAULT_ITEM, ...CATEGORY_LIST];
+
   return (
     <>
       <HeaderField />
@@ -26,7 +29,7 @@ const RestaurantsPage = () => {
           justify-content: space-between;
         `}>
         <Dropdown defaultValue={filter} onClick={handleFilter}>
-          {CATEGORY_LIST.map(({ value, name }) => (
+          {CATEGORY_LIST_WITH_ALL.map(({ value, name }) => (
             <Dropdown.Option key={value} value={value}>
               {name}
             </Dropdown.Option>
