@@ -9,19 +9,25 @@ import { useDeleteRestaurant } from '../hooks/queries/useDeleteRestaurant';
 import Toggle from './Toggle';
 import { usePatchFavoriteRestaurant } from '../hooks/queries/usePatchFavoriteRestaurant';
 import Spacing from './Spacing';
+import BottomSheetSkeleton from './BottomSheetSkeleton';
 
 type Props = BottomSheetProps & {
   id: number;
 };
 
 const RestaurantDetailBottomSheet = ({ isOpen, onClose, id }: Props) => {
-  const { restaurant } = useGetRestaurantDetail(id);
-  const { name, category, timeToMove, description, link, favorite } = restaurant;
+  const { restaurant, isFetching } = useGetRestaurantDetail(id);
 
   const { deleteRestaurant } = useDeleteRestaurant();
   const { changeFavorite } = usePatchFavoriteRestaurant(id);
 
   const theme = useTheme();
+
+  if (!restaurant || isFetching) {
+    return <BottomSheetSkeleton size='medium' />;
+  }
+
+  const { name, category, timeToMove, description, link, favorite } = restaurant;
 
   const onDelete = async () => {
     onClose();
