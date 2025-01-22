@@ -9,6 +9,7 @@ import { useDeleteRestaurant } from '../hooks/queries/useDeleteRestaurant';
 import Toggle from './Toggle';
 import { usePatchFavoriteRestaurant } from '../hooks/queries/usePatchFavoriteRestaurant';
 import Spacing from './Spacing';
+import Spinner from './Spinner';
 
 type Props = BottomSheetProps & {
   id: number;
@@ -16,12 +17,17 @@ type Props = BottomSheetProps & {
 
 const RestaurantDetailBottomSheet = ({ isOpen, onClose, id }: Props) => {
   const { restaurant } = useGetRestaurantDetail(id);
-  const { name, category, timeToMove, description, link, favorite } = restaurant;
 
   const { deleteRestaurant } = useDeleteRestaurant();
   const { changeFavorite } = usePatchFavoriteRestaurant(id);
 
   const theme = useTheme();
+
+  if (!restaurant) {
+    return <Spinner />;
+  }
+
+  const { name, category, timeToMove, description, link, favorite } = restaurant;
 
   const onDelete = async () => {
     onClose();

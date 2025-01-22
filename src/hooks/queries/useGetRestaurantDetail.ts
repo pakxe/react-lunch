@@ -1,4 +1,4 @@
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { Restaurant } from '../../types/serviceType';
 import fetchUtil from '../../utils/fetch';
 import { QUERY_KEY } from '../../constants/queryKey';
@@ -10,7 +10,7 @@ const requestGetRestaurantDetail = async (id: number) => {
 };
 
 const useGetRestaurantDetail = (id: number) => {
-  const { data, ...rest } = useSuspenseQuery({
+  const { data, ...rest } = useQuery({
     queryKey: [QUERY_KEY.RESTAURANTS, id],
     queryFn: () => requestGetRestaurantDetail(id),
   });
