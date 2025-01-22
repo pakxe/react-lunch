@@ -9,7 +9,7 @@ import { useDeleteRestaurant } from '../hooks/queries/useDeleteRestaurant';
 import Toggle from './Toggle';
 import { usePatchFavoriteRestaurant } from '../hooks/queries/usePatchFavoriteRestaurant';
 import Spacing from './Spacing';
-import Spinner from './Spinner';
+import BottomSheetSkeleton from './BottomSheetSkeleton';
 
 type Props = BottomSheetProps & {
   id: number;
@@ -24,7 +24,7 @@ const RestaurantDetailBottomSheet = ({ isOpen, onClose, id }: Props) => {
   const theme = useTheme();
 
   if (!restaurant || isFetching) {
-    return <Spinner />;
+    return <BottomSheetSkeleton size='medium' />;
   }
 
   const { name, category, timeToMove, description, link, favorite } = restaurant;
